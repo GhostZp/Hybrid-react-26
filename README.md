@@ -1,3 +1,9 @@
+# Hybrid Applications 2026
+
+Example React project.
+
+Open [link](https://users.metropolia.fi/~annakall/Hybrid/Routing/) to view it in the browser.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

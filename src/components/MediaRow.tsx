@@ -1,9 +1,13 @@
 import type { MediaItem } from "hybrid-types/DBTypes";
-import { useState } from "react";
+import { Link } from "react-router";
+//import { useState } from "react";
 
-const MediaRow = (props: { item: MediaItem }) => {
+const MediaRow = (props: {
+  item: MediaItem;
+  setSelectedItem: (item: MediaItem | undefined) => void;
+}) => {
   const { item } = props;
-  const [dummyLikes, setDummyLikes] = useState(0);
+  //const [dummyLikes, setDummyLikes] = useState(0);
 
   return (
     <tr>
@@ -15,12 +19,24 @@ const MediaRow = (props: { item: MediaItem }) => {
       <td>{new Date(item.created_at).toLocaleString("fi-FI")}</td>
       <td>{item.filesize}</td>
       <td>{item.media_type}</td>
-      <td>Likes: {dummyLikes}
+      <td>
+        <Link to="/single" state={{ item }}>
+          Show
+        </Link>
+        {/*         <button
+          onClick={() => {
+            setSelectedItem(item);
+          }}
+        >
+          View
+        </button> */}
+      </td>
+      {/*       <td>Likes: {dummyLikes}
         <button onClick={() => {
           console.log('add like to', item.title);
           setDummyLikes(dummyLikes + 1)
         }} >Add like</button>
-      </td>
+      </td> */}
     </tr>
   );
 };
