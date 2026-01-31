@@ -2,7 +2,7 @@
 
 Example React project.
 
-Open [link](https://users.metropolia.fi/~annakall/Hybrid/Routing/) to view it in the browser.
+Open [link](https://users.metropolia.fi/~annakall/Hybrid/Custom-Hooks/) to view it in the browser.
 
 # React + TypeScript + Vite
 

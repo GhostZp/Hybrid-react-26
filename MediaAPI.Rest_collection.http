@@ -1,0 +1,214 @@
+### =======================
+### VARIABLES
+### =======================
+@mediaApi = https://media2.edu.metropolia.fi/media-api
+@uploadApi = https://media2.edu.metropolia.fi/upload-api
+@authApi = https://media2.edu.metropolia.fi/auth-api
+@token = YOUR_TOKEN_HERE
+
+
+### =======================
+### REGISTER
+### =======================
+POST {{authApi}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password",
+  "email": "your_username@metropolia.fi"
+}
+
+
+### =======================
+### LOGIN
+### =======================
+POST {{authApi}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "ilkka",
+  "password": "your_password"
+}
+
+
+### =======================
+### UPLOAD FILE
+### =======================
+POST {{uploadApi}}/api/v1/upload
+x-access-token: {{token}}
+Content-Type: multipart/form-data
+
+file=@/Users/your_username/Downloads/kissa.jpg
+
+
+### =======================
+### CREATE MEDIA
+### =======================
+POST {{mediaApi}}/api/v1/media
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Example Video",
+  "description": "Example Description",
+  "filename": "FILENAME_FROM_UPLOAD.mov",
+  "media_type": "video/quicktime",
+  "filesize": 6383337
+}
+
+
+### =======================
+### ADD TAG
+### =======================
+POST {{mediaApi}}/api/v1/tags
+Content-Type: application/json
+
+{
+  "tag_name": "example",
+  "media_id": 3
+}
+
+
+### =======================
+### LIKE
+### =======================
+POST {{mediaApi}}/api/v1/likes
+Content-Type: application/json
+
+{
+  "media_id": 4
+}
+
+
+### =======================
+### RATING
+### =======================
+POST {{mediaApi}}/api/v1/ratings
+Content-Type: application/json
+
+{
+  "rating_value": 3,
+  "media_id": 4
+}
+
+
+### =======================
+### COMMENT
+### =======================
+POST {{mediaApi}}/api/v1/comments
+Content-Type: application/json
+
+{
+  "comment_text": "Äääkkööösiii",
+  "media_id": 3
+}
+
+
+### =======================
+### CHECK TOKEN
+### =======================
+GET {{authApi}}/api/v1/users/token
+x-access-token: {{token}}
+
+
+### =======================
+### GET MEDIA LIST
+### =======================
+GET {{mediaApi}}/api/v1/media
+
+
+### =======================
+### GET MEDIA BY ID
+### =======================
+GET {{mediaApi}}/api/v1/media/999999
+
+
+### =======================
+### GET TAGS
+### =======================
+GET {{mediaApi}}/api/v1/tags
+
+
+### =======================
+### GET RATINGS
+### =======================
+GET {{mediaApi}}/api/v1/ratings
+
+
+### =======================
+### GET COMMENTS
+### =======================
+GET {{mediaApi}}/api/v1/comments
+
+
+### =======================
+### GET LIKES
+### =======================
+GET {{mediaApi}}/api/v1/likes
+
+
+### =======================
+### GET LIKES BY MEDIA
+### =======================
+GET {{mediaApi}}/api/v1/likes/bymedia/173
+
+
+### =======================
+### GET TAGS BY MEDIA
+### =======================
+GET {{mediaApi}}/api/v1/tags/bymedia/73
+
+
+### =======================
+### GET MEDIA BY TAG
+### =======================
+GET {{mediaApi}}/api/v1/tags/bytagname/test-tag
+
+
+### =======================
+### GET RATINGS BY MEDIA
+### =======================
+GET {{mediaApi}}/api/v1/ratings/bymedia/73
+
+
+### =======================
+### GET RATINGS BY USER
+### =======================
+GET {{mediaApi}}/api/v1/ratings/byuser/7
+
+
+### =======================
+### GET AVERAGE RATING
+### =======================
+GET {{mediaApi}}/api/v1/ratings/average/73
+
+
+### =======================
+### GET USERS
+### =======================
+GET {{authApi}}/api/v1/users
+
+
+### =======================
+### CHECK USERNAME
+### =======================
+GET {{authApi}}/api/v1/users/username/ilkka
+
+
+### =======================
+### GET LIKES COUNT
+### =======================
+GET {{mediaApi}}/api/v1/likes/count/87
+
+
+### =======================
+### GET LIKES BY MEDIA + USER
+### =======================
+GET {{mediaApi}}/api/v1/likes/bymedia/user/87
+
+
+### =======================
+### GET LIKES BY USER
+### =======================
+GET {{mediaApi}}/api/v1/likes/byuser/41
