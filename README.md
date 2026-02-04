@@ -2,7 +2,9 @@
 
 Example React project.
 
-Open [link](https://users.metropolia.fi/~annakall/Hybrid/Custom-Hooks/) to view it in the browser.
+Master has the current working project + WIP of tailwind css
+
+Open [link](https://users.metropolia.fi/~annakall/Hybrid/Context/) to view it in the browser.
 
 # React + TypeScript + Vite
 
