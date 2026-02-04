@@ -1,14 +1,15 @@
 /// <reference types="vitest/config" /> // https://vitest.dev/config/
-import {defineConfig} from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/~annakall/Hybrid/Custom-Hooks/',
+  plugins: [react(), tailwindcss()],
+  base: "/",
   test: {
-    environment: 'jsdom',
+    environment: "jsdom",
     globals: true,
-    setupFiles: './vitest-setup.js',
+    setupFiles: "./vitest-setup.js",
   },
 });

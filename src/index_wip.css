@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    @apply bg-stone-800 text-stone-50 antialiased;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    @apply max-w-4
+  }
+}
