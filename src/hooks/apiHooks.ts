@@ -3,10 +3,11 @@ import type {
   MediaItemWithOwner,
   UserWithNoPassword,
 } from 'hybrid-types/DBTypes';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {fetchData} from '../utils/fetch-data';
 import type {Credentials, RegisterCredentials} from '../types/LocalTypes';
 import type {
+  AvailableResponse,
   LoginResponse,
   MediaResponse,
   UploadResponse,
@@ -115,17 +116,30 @@ const useUser = () => {
     return registerResult;
   };
 
-  const getUserByToken = async (token: string) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
-    return fetchData<UserResponse>(resourceUrl + '/token', options);
+  const getUserByToken = useCallback(
+    async (token: string) => {
+      const options = {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      };
+      return fetchData<UserResponse>(resourceUrl + '/token', options);
+    },
+    [resourceUrl],
+  );
+
+  const getUsernameAvailable = async (username: string) => {
+    // fetch from endpoint /users/username/:username
+    return fetchData<AvailableResponse>(`${resourceUrl}/username/${username}`);
   };
 
-  return {postRegister, getUserByToken};
+  const getEmailAvailable = async (email: string) => {
+    // fetch from endpoint /users/email/:email
+    return fetchData<AvailableResponse>(`${resourceUrl}/email/${email}`);
+  };
+
+  return {postRegister, getUserByToken, getUsernameAvailable, getEmailAvailable};
 };
 
 const useFile = () => {

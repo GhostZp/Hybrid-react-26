@@ -1,44 +1,63 @@
 import type { MediaItem, MediaItemWithOwner } from "hybrid-types/DBTypes";
-import { Link } from "react-router";
-//import { useState } from "react";
+import {useUserContext} from '../hooks/contextHooks';
 
 const MediaRow = (props: {
   item: MediaItemWithOwner;
   setSelectedItem: (item: MediaItem | undefined) => void;
 }) => {
-  const { item } = props;
-  //const [dummyLikes, setDummyLikes] = useState(0);
+  const { item, setSelectedItem } = props;
+  const {user} = useUserContext();
 
   return (
-    <tr>
-      <td>
-        <img src={item.thumbnail} alt={item.title} />
-      </td>
-      <td>{item.title}</td>
-      <td>{item.description}</td>
-      <td>{item.username}</td>
-      <td>{new Date(item.created_at).toLocaleString("fi-FI")}</td>
-      <td>{item.filesize}</td>
-      <td>{item.media_type}</td>
-      <td>
-        <Link to="/single" state={{ item }}>
-          Show
-        </Link>
-        {/*         <button
-          onClick={() => {
-            setSelectedItem(item);
-          }}
-        >
-          View
-        </button> */}
-      </td>
-      {/*       <td>Likes: {dummyLikes}
-        <button onClick={() => {
-          console.log('add like to', item.title);
-          setDummyLikes(dummyLikes + 1)
-        }} >Add like</button>
-      </td> */}
-    </tr>
+        <article>
+      <img
+        src={item.thumbnail}
+        alt={item.title}
+      />
+      <div>
+        <h3>{item.title}</h3>
+        <p>
+          {item.description}
+        </p>
+        <div>
+          <p>
+            Created at: <br />{' '}
+            {new Date(item.created_at).toLocaleString('fi-FI')}
+          </p>
+          <p>Filesize: {(item.filesize / 1024 / 1024).toFixed(2)} MB</p>
+          <p>Mime-type: {item.media_type}</p>
+          <p>Owner: {item.username}</p>
+        </div>
+        <p>
+          <button
+            onClick={() => {
+              setSelectedItem(item);
+            }}
+          >
+            View
+          </button>
+          {/* User exists and owns the media item or is an admin */}
+          {user && (user.user_id === item.user_id || user?.level_name === 'Admin') && (
+            <>
+              <button
+                onClick={() => {
+                  console.log('edit media item', item, 'current user', user);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => {
+                  console.log('delete media item');
+                }}
+              >
+                Delete
+              </button>
+            </>
+          )}
+        </p>
+      </div>
+    </article>
   );
 };
 
