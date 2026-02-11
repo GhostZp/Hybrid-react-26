@@ -1,4 +1,5 @@
 import type {
+  Like,
   MediaItem,
   MediaItemWithOwner,
   UserWithNoPassword,
@@ -10,6 +11,7 @@ import type {
   AvailableResponse,
   LoginResponse,
   MediaResponse,
+  MessageResponse,
   UploadResponse,
   UserResponse,
 } from 'hybrid-types/MessageTypes';
@@ -139,7 +141,12 @@ const useUser = () => {
     return fetchData<AvailableResponse>(`${resourceUrl}/email/${email}`);
   };
 
-  return {postRegister, getUserByToken, getUsernameAvailable, getEmailAvailable};
+  return {
+    postRegister,
+    getUserByToken,
+    getUsernameAvailable,
+    getEmailAvailable,
+  };
 };
 
 const useFile = () => {
@@ -166,4 +173,55 @@ const useFile = () => {
   return {postFile};
 };
 
-export {useMedia, useAuthentication, useUser, useFile};
+const useLike = () => {
+  const postLike = async (media_id: number, token: string) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({media_id}),
+    };
+    return fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/likes',
+      fetchOptions,
+    );
+  };
+
+  const deleteLike = async (like_id: number, token: string) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/likes/' + like_id,
+      fetchOptions,
+    );
+  };
+
+  const getCountByMediaId = async (media_id: number) => {
+    return fetchData<{count: number}>(
+      import.meta.env.VITE_MEDIA_API + '/likes/count/' + media_id,
+    );
+  };
+
+  const getUserLike = async (media_id: number, token: string) => {
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return fetchData<Like>(
+      import.meta.env.VITE_MEDIA_API + '/likes/bymedia/user/' + media_id,
+      fetchOptions,
+    );
+  };
+
+  return {postLike, deleteLike, getCountByMediaId, getUserLike};
+};
+
+export {useMedia, useAuthentication, useUser, useFile, useLike};
